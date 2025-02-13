@@ -2,9 +2,9 @@
 
 ## 📋 Project Description
 
-This project is an advanced chat application that leverages OpenAI's powerful language models to provide intelligent responses. Built with a modern tech stack, it combines FastAPI backend with a responsive frontend, featuring load balancing, service discovery, and session management.
+This project is an advanced chat application that leverages OpenAI's powerful language models to provide intelligent responses. Built with a modern tech stack, it combines a FastAPI backend with a responsive frontend, featuring load balancing, service discovery, and session management.
 
-### 🎯 Purpose
+## 🎯 Purpose
 
 - Create a scalable, intelligent chatbot interface using OpenAI's GPT models
 - Provide fast and reliable responses through efficient API integration
@@ -84,82 +84,156 @@ graph TD
     C -->|Tasks| I[Task Queue]
 ```
 
-## Project Structure
+## 📂 Project Structure
 
 ```
 OpenAI Chatbot Project/
-├── app/                          # Main application directory
-│   ├── __init__.py               # Python package initializer
-│   ├── main.py                   # FastAPI main application file
-│   ├── error_handlers.py         # Error handling logic
-│   ├── memory.py                 # Chat history memory management
-│   ├── models/                   # Data models directory
+├── app/
+│   ├── __init__.py
+│   ├── main.py
+│   ├── error_handlers.py
+│   ├── memory.py
+│   ├── models/
 │   │   ├── __init__.py
-│   │   ├── message.py            # Message model definitions
-│   ├── routers/                  # API routes directory
+│   │   ├── message.py
+│   ├── routers/
 │   │   ├── __init__.py
-│   │   └── chat.py               # Chat endpoints
-│   ├── handlers/                 # Handlers directory
-│   │   └── message_handler.py    # Message processing logic
-│   ├── services/                 # Services directory
+│   │   └── chat.py
+│   ├── handlers/
+│   │   └── message_handler.py
+│   ├── services/
 │   │   ├── __init__.py
-│   │   └── chat_service.py       # Chat service logic
-│   └── exceptions.py             # Custom exception classes
-├── common/                       # Common modules directory
-│   ├── websocket_manager.py      # WebSocket management interface
-├── services/                     # External services directory
+│   │   └── chat_service.py
+│   └── exceptions.py
+├── common/
+│   ├── websocket_manager.py
+├── services/
 │   ├── __init__.py
-│   └── openai_service.py         # OpenAI API integration
-├── config/                       # Configuration files
+│   └── openai_service.py
+├── config/
 │   ├── __init__.py
-│   ├── logging_config.py         # Logging settings
-│   ├── faiss_config.py           # FAISS vector DB settings
-│   └── settings.py               # Application settings
-├── load_balancer/                # Load balancer
+│   ├── logging_config.py
+│   ├── faiss_config.py
+│   └── settings.py
+├── load_balancer/
 │   ├── __init__.py
-│   └── balancer.py               # Load balancing logic
-├── middleware/                   # Middleware
+│   └── balancer.py
+├── middleware/
 │   ├── __init__.py
-│   └── error_logging.py          # Error logging middleware
-├── scripts/                      # Helper scripts
+│   └── error_logging.py
+├── scripts/
 │   ├── __init__.py
-│   └── vectorization.py          # Vectorization processes
-├── service_discovery/            # Service discovery
+│   └── vectorization.py
+├── service_discovery/
 │   ├── __init__.py
-│   └── discovery.py              # Service discovery logic
-├── session/                      # Session management
+│   └── discovery.py
+├── session/
 │   ├── __init__.py
-│   └── redis_store.py            # Redis session store
-├── templates/                    # HTML templates
-│   └── index.html                # Main page template
-├── static/                       # Static files
-│   ├── css/                      # CSS files
-│   └── js/                       # JavaScript files
-├── utils/                        # Utility tools
+│   └── redis_store.py
+├── templates/
+│   └── index.html
+├── static/
+│   ├── css/
+│   └── js/
+├── utils/
 │   ├── __init__.py
-│   ├── helpers.py                # General helper functions
-│   ├── cache_manager.py          # Cache management
-│   ├── decorators.py             # Custom decorators
-│   ├── health_check.py           # Health check
-│   ├── performance_logger.py     # Performance logging
-│   ├── rate_limiter.py           # Rate limiting
-│   ├── task_queue.py             # Task queue
-│   └── backup_manager.py         # Backup management
-├── tests/                        # Test files
+│   ├── helpers.py
+│   ├── cache_manager.py
+│   ├── decorators.py
+│   ├── health_check.py
+│   ├── performance_logger.py
+│   ├── rate_limiter.py
+│   ├── task_queue.py
+│   └── backup_manager.py
+├── tests/
 │   ├── __init__.py
-│   ├── test_exceptions.py        # Exception tests
-│   ├── test_helpers.py           # Helper function tests
-│   ├── test_main.py              # Main application tests
-│   ├── test_openai_services.py   # OpenAI service tests
-│   └── test_vector_store.py      # Vector store tests
-├── .coverage                     # Coverage report file
-├── .coveragerc                   # Coverage configuration
-├── .env                          # Environment variables
-├── Dockerfile                    # Docker configuration
-├── docker-compose.yml            # Docker Compose configuration
-├── nginx.conf                    # Nginx web server configuration
-├── pytest.ini                    # Pytest configuration
-├── requirements.txt              # Python dependencies
-├── setup.py                      # Package configuration
-└── README.md                     # Project documentation
+│   ├── test_exceptions.py
+│   ├── test_helpers.py
+│   ├── test_main.py
+│   ├── test_openai_services.py
+│   └── test_vector_store.py
+├── .coverage
+├── .coveragerc
+├── .env
+├── Dockerfile
+├── docker-compose.yml
+├── nginx.conf
+├── pytest.ini
+├── requirements.txt
+├── setup.py
+└── README.md
 ```
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Python 3.11+
+- Docker
+- Docker Compose
+- Redis
+- OpenAI API Key
+
+### Installation
+
+Clone the repository:
+
+```sh
+git clone https://github.com/zehraacer/Enterprise-Grade_OpenAI_Chatbot_Platform.git
+cd Enterprise-Grade_OpenAI_Chatbot_Platform
+```
+
+Create and activate a virtual environment:
+
+```sh
+python3 -m venv venv
+source venv/bin/activate
+```
+
+Install dependencies:
+
+```sh
+pip install -r requirements.txt
+```
+
+Set up environment variables:
+Create a `.env` file in the root directory and add your configuration:
+
+```env
+OPENAI_API_KEY=your_openai_api_key
+REDIS_URL=redis://localhost:6379/0
+```
+
+Run the application:
+
+```sh
+python -m uvicorn app.main:app --reload
+```
+
+### Using Docker
+
+Build and run the Docker containers:
+
+```sh
+docker-compose up --build
+```
+
+## 🧪 Running Tests
+
+To run the tests, use the following command:
+
+```sh
+pytest
+```
+
+## 🤝 Contribution
+
+Contributions are welcome! Please fork the repository and create a pull request. For major changes, please open an issue first to discuss what you would like to change.
+
+## 📄 License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+## 📧 Contact
+
+For any inquiries or support, please contact [zehraacer](https://github.com/zehraacer).
