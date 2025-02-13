@@ -1,0 +1,25 @@
+[run]
+source = app
+omit = 
+    tests/*
+    */__pycache__/*
+    */__init__.py
+    */migrations/*
+    */venv/*
+    */env/*
+    setup.py
+
+[report]
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    if self.debug:
+    raise NotImplementedError
+    if __name__ == .__main__.:
+    pass
+    raise ImportError
+    except Exception as e:
+
+[html]
+directory = htmlcov
+title = Chat Application Test Coverage Report

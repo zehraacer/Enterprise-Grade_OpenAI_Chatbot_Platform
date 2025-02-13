@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenAI Chatbot</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Base styles */
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --background-color: #f4f4f4;
+            --chat-bg: #ffffff;
+            --message-user-bg: #3498db;
+            --message-bot-bg: #f1f5f9;
+            --text-color: #2c3e50;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            transition: all 0.3s ease;
+        }
+
+        .chat-container {
+            background: var(--chat-bg);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 400px;
+            height: 600px;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 14px;
+            border: 2px solid #edf2f7;
+            border-radius: 12px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background-color: #f8fafc;
+        }
+
+        .chat-input button {
+            padding: 14px 24px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        /* Theme selector styles */
+        .theme-selector {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
+
+        .theme-selector select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        /* Common animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes glitchEffect {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(2px, -2px); }
+            60% { transform: translate(-2px, -2px); }
+            80% { transform: translate(2px, 2px); }
+            100% { transform: translate(0); }
+        }
+
+        /* Theme styles */
+        /* Holographic Theme */
+        body.theme-holographic {
+            background: linear-gradient(45deg, #0a0a1e, #1a1a3e);
+        }
+
+        .theme-holographic .chat-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 20px rgba(52, 152, 219, 0.3);
+        }
+
+        .theme-holographic .bot-msg {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .theme-holographic .user-msg {
+            background: rgba(52, 152, 219, 0.7);
+            color: #fff;
+        }
+
+        /* Terminal Theme */
+        body.theme-terminal {
+            background: #000;
+        }
+
+        .theme-terminal .chat-container {
+            background: #000;
+            border: 2px solid #0f0;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+        }
+
+        .theme-terminal .bot-msg,
+        .theme-terminal .user-msg {
+            font-family: 'Courier New', monospace;
+            border: none;
+            color: #0f0;
+        }
+
+        .theme-terminal .bot-msg {
+            background: #002200;
+        }
+
+        .theme-terminal .user-msg {
+            background: #004400;
+        }
+
+        /* Comic Theme */
+        body.theme-comic {
+            background: #fff;
+        }
+
+        .theme-comic .chat-container {
+            background: #fff;
+            border: 3px solid #000;
+            box-shadow: 8px 8px 0 #000;
+        }
+
+        .theme-comic .bot-msg,
+        .theme-comic .user-msg {
+            font-family: 'Comic Sans MS', cursive;
+            border: 2px solid #000;
+            box-shadow: 3px 3px 0 #000;
+            transform: rotate(-1deg);
+        }
+
+        .theme-comic .user-msg {
+            background: #fff4cc;
+            transform: rotate(1deg);
+        }
+
+        .theme-comic .bot-msg {
+            background: #ccf4ff;
+        }
+
+        /* Cyberpunk Theme */
+        body.theme-cyberpunk {
+            background: linear-gradient(45deg, #0a0a2e, #1a1a4e);
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .theme-cyberpunk .chat-container {
+            background: rgba(10, 10, 46, 0.7);
+            border: 1px solid #00ffff;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+
+        .theme-cyberpunk .bot-msg {
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            color: #fff;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+            animation: glitchEffect 2s infinite;
+        }
+
+        .theme-cyberpunk .user-msg {
+            background: rgba(255, 0, 255, 0.1);
+            border: 1px solid rgba(255, 0, 255, 0.3);
+            color: #fff;
+            text-shadow: 0 0 5px rgba(255, 0, 255, 0.5);
+        }
+
+        .theme-cyberpunk .chat-input input {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #00ffff;
+            color: #fff;
+        }
+
+        .theme-cyberpunk .chat-input button {
+            background: transparent;
+            border: 1px solid #ff00ff;
+            color: #ff00ff;
+            text-shadow: 0 0 5px #ff00ff;
+        }
+
+        /* Common styles */
+        .chat-box {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding: 15px;
+        }
+
+        .user-msg, .bot-msg {
+            margin: 12px;
+            padding: 14px;
+            border-radius: 16px;
+            max-width: 80%;
+            word-wrap: break-word;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .user-msg {
+            background-color: var(--message-user-bg);
+            color: rgb(59, 49, 49);
+            margin-left: auto;
+        }
+
+        .bot-msg {
+            background-color: var(--message-bot-bg);
+            color: var(--text-color);
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="theme-selector">
+            <select id="themeSelect" onchange="changeTheme(this.value)">
+                <option value="default">Default Theme</option>
+                <option value="holographic">Holographic Assistant</option>
+                <option value="terminal">Terminal Style</option>
+                <option value="comic">Comic Style</option>
+                <option value="cyberpunk">Holographic Neon (Cyberpunk)</option>
+            </select>
+        </div>
+
+        <div class="chat-box" id="chat-box">
+            <div class="bot-msg">Hi, how can I help you today?</div>
+        </div>
+
+        <form class="chat-input" id="chat-form">
+            <input 
+                type="text" 
+                id="message-input"
+                placeholder="Ask me anything..." 
+                required
+                autocomplete="off"
+            >
+            <button type="submit">Send</button>
+        </form>
+    </div>
+    <script>
+        function changeTheme(theme) {
+            // First, remove all theme classes
+            document.body.classList.remove('theme-holographic', 'theme-terminal', 'theme-comic', 'theme-cyberpunk');
+            
+            // Add the new theme
+            if (theme !== 'default') {
+                document.body.classList.add(`theme-${theme}`);
+            }
+            
+            // Save the theme preference
+            localStorage.setItem('preferred-theme', theme);
+            
+            // Log to console for debugging
+            console.log('Theme changed to:', theme);
+        }
+
+        // Load the saved theme when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('preferred-theme');
+            if (savedTheme) {
+                changeTheme(savedTheme);
+                document.getElementById('themeSelect').value = savedTheme;
+            }
+            console.log('Saved theme loaded:', savedTheme);
+        });
+
+        // Message sending functionality
+        const chatForm = document.getElementById('chat-form');
+        const chatBox = document.getElementById('chat-box');
+        const messageInput = document.getElementById('message-input');
+
+        const userId = 'user_' + Math.random().toString(36).substr(2, 9);
+
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const message = messageInput.value.trim();
+            if (message) {
+                // Add user message
+                appendMessage(message, 'user');
+                messageInput.value = '';
+
+                try {
+                    const response = await fetch('/api/chat', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ 
+                            content: message,
+                            user_id: userId
+                        })
+                    });
+
+                    const data = await response.json();
+                    appendMessage(data.content, 'bot');
+                } catch (error) {
+                    console.error('Error:', error);
+                    appendMessage('Sorry, there was an error processing your request.', 'bot');
+                }
+            }
+        });
+
+        function appendMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `${sender}-msg`;
+            messageDiv.textContent = text;
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    </script>
+</body>
+</html>

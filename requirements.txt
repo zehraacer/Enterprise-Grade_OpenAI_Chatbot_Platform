@@ -1,0 +1,56 @@
+# Core Web Frameworks & API
+flask>=2.0.0
+fastapi>=0.68.0
+uvicorn>=0.15.0
+jinja2>=3.0.1
+
+# AI & Machine Learning
+openai>=0.27.0
+langchain>=0.0.300
+numpy>=1.19.0
+pandas>=1.3.0
+faiss-cpu>=1.7.4
+
+# Database & Caching
+motor==3.1.1
+redis>=4.0.0
+pymongo>=3.12.0
+
+# Task Queue & Background Jobs
+celery>=5.0.0
+APScheduler>=3.9.1  # New - For backup scheduling
+aiofiles>=0.8.0     # New - For asynchronous file operations
+
+# HTTP & Network
+requests>=2.26.0
+httpx==0.25.2
+python-multipart>=0.0.5
+aiohttp>=3.8.0      # New - For asynchronous HTTP requests
+
+# Security
+python-jose[cryptography]>=3.3.0
+passlib>=1.7.4
+python-dotenv==1.0.0
+bcrypt>=4.0.0       # New - For encryption
+
+# Parsing & Data Processing
+beautifulsoup4>=4.9.0
+packaging>=21.0
+
+# Monitoring & Logging
+prometheus-client==0.17.1
+psutil>=5.8.0
+structlog>=22.1.0   # New - For structured logging
+sentry-sdk>=1.0.0   # New - For error tracking
+
+# Testing & Development
+pytest==7.4.3
+pytest-cov==4.1.0
+pytest-asyncio>=0.18.0  # New - For asynchronous tests
+flake8==6.1.0
+black>=22.3.0          # New - Code formatting
+isort>=5.10.1          # New - Import sorting
+mypy>=0.900            # New - Type checking
+
+# AWS Integration (Optional - For S3 backup)
+boto3>=1.26.0          # New - For AWS services
